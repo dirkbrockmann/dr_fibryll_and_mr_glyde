@@ -7,11 +7,14 @@ import {range,map,toPairs} from "lodash-es"
 
 import cfg from "./config.js"
 import parameters from "./parameters.js"
+import {initialize as cartoon_init, update as cartoon_update} from "./cartoon.js"
 
 import {toArray,add_id_label,add_widget,get_variables,get_booleans,get_choices} from "./utils.js"
 
 
 // defined variables for variables, booleans and choices, extracting the information from parameters.js
+
+
 
 const variables = get_variables(parameters);
 const booleans = get_booleans(parameters);
@@ -38,6 +41,10 @@ const sliders = map(va,
 					.range(v.range)
 					.value(v.default)
 					.size(cfg.widgets.slider_size)
+					.girth(cfg.widgets.slider_girth)
+					.knob(cfg.widgets.slider_knob)
+					.fontsize(cfg.widgets.fontsize)
+
 		);
 
 // making the toggle widgets objects, based on the switches
@@ -46,7 +53,8 @@ const toggles = map(bo,
 		v => widgets.toggle()
 					.id(v.id).
 					label(v.label).
-					value(v.default)					
+					value(v.default)
+					.fontsize(cfg.widgets.fontsize)					
 		);
 
 // making the radio widgets objects, based on the choices
@@ -58,6 +66,7 @@ const radios = map(ch,
 					.value(v.default)
 					.orientation(cfg.widgets.radio_orientation)
 					.labelposition(cfg.widgets.radio_label_position)
+					.fontsize(cfg.widgets.fontsize)
 		);
 
 
@@ -91,6 +100,9 @@ const buttons = [go,setup,reset];
 // to the needs of the explorable
 
 export default (controls,grid)=>{
+	
+	
+	cartoon_init(controls,grid)
 
 	const sl_pos=grid.position(cfg.widgets.slider_anchor.x,range(sliders.length)
 			.map(x=>(cfg.widgets.slider_anchor.y+cfg.widgets.slider_gap*x)));

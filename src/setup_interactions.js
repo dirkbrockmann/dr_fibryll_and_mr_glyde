@@ -11,6 +11,7 @@ import cfg from "./config.js"
 import param from "./parameters.js"
 import resetparameters from "./reset_parameters.js"
 import {iterate,initialize,update} from "./simulation.js"
+import {initialize as cartoon_init, update as cartoon_update} from "./cartoon.js"
 
 
 var timer = {}
@@ -31,7 +32,8 @@ export default (display,controls,config) => {
 	ct.reset.update(()=>resetparameters(controls))	// one button gets the resetparameters() method defined in resetparameters.js
 	ct.go.update(()=>startstop(display,config)) // one button gets the startstop function defined above
 	ct.setup.update(()=>initialize(display,config)) // this once gets the initialize() method defined in simulation.js
-	param.number_of_particles.widget.update(()=>initialize(display,config)) // here we say that if a specific parameter is changed, in this case the number of particles, we also re_initialize the system (model and visuals)
-	
+	param.lattice.widget.update(()=>initialize(display,config)) // here we say that if a specific parameter is changed, in this case the number of particles, we also re_initialize the system (model and visuals)
+	param.firing_frequency.widget.update(()=>cartoon_update(controls))
+	param.spike_intensity.widget.update(()=>cartoon_update(controls))
 }
 
