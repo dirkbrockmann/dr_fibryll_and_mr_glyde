@@ -9,7 +9,7 @@ export default {
 		dt:0.05,
 		L:100,
 	boundary:"periodic",
-		N:{hex:60,square:80},
+		N:{hex:50,square:100},
 	
 		oscillator_heterogeneity: {
 			range:[0,0.3],
