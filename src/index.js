@@ -1,7 +1,9 @@
 // this is the main file for the explorable that get's executed when the exporable is loaded
 
-import './styles.css'
+import  'tachyons/css/tachyons.min.css'
+
 import cfg from "./container_config.js" // imports default classes and styles and parameters for the container
+
 import setup_container from "./setup_container.js"
 import setup_interactions from "./setup_interactions.js"
 import setup_controls from "./controls.js"
