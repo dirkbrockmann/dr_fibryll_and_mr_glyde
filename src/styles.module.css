@@ -1,0 +1,30 @@
+.plot {
+	font-size: 12px;
+	text-anchor:middle;
+}
+
+.xaxis, .yaxis {
+
+}
+
+.threshold {
+	stroke:grey;
+	stroke-width:1px;
+}
+
+.chargelevel {
+	stroke:darkblue;
+	stroke-width:1px;
+	stroke-dasharray:4 4;
+}
+
+.spiketrain {
+	stroke:blue;
+	stroke-width:2px;
+	fill:none;
+}
+
+.spike {
+	stroke-width:3px;
+	stroke:red;
+}

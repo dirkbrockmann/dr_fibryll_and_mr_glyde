@@ -1,7 +1,7 @@
 import * as d3 from "d3"
 import cfg from "./config.js"
 import param from "./parameters.js"
-
+import styles from "./styles.module.css"
 
 const T = [0,10];
 
@@ -13,7 +13,6 @@ const yAxis = d3.axisLeft(sc_y).tickFormat("");
 const line = d3.line()
     .x(function(d) { return sc_x(d.x); })
     .y(function(d) { return sc_y(d.y); });
-	
 	
 const spiketrain = (S,T) => {
 	
@@ -34,51 +33,40 @@ const spiketrain = (S,T) => {
 
 
 const initialize = (controls,grid) => {
-	
 		
-	
 	const pos=grid.position(cfg.cartoon.anchor.x,cfg.cartoon.anchor.y);		
 	const fs = cfg.cartoon.fontsize;
 	const S = param.firing_frequency.widget.value()
 	const delta = param.spike_intensity.widget.value()
 	
 	const curve = spiketrain(S,T[1])
-
 	
-	const plot = controls.append("g").attr("class","plot")
+	const plot = controls.append("g").attr("class",styles.plot)
 		.attr("transform","translate("+pos.x+","+pos.y+")")
 	
-	plot.append("g").call(xAxis).attr("class","xaxis");
-	plot.append("g").call(yAxis).attr("class","yaxis");
+	plot.append("g").call(xAxis).attr("class",styles.xaxis);
+	plot.append("g").call(yAxis).attr("class",styles.yaxis);
 	
-	plot.append("text").text("time").attr("transform","translate("+sc_x((T[1]-T[0])/2)+","+1.5*fs+")")
-		.style("text-anchor","middle").style("font-size",fs)	
+	plot.append("text").text("time").attr("transform","translate("+sc_x((T[1]-T[0])/2)+","+20+")")
+		
+	plot.append("text").text("charge").attr("transform","translate("+(-15)+","+(sc_y(1))+")rotate(-90)")
 
-	plot.append("text").text("charge").attr("transform","translate("+(-fs)+","+(sc_y(1))+")rotate(-90)")
-		.style("text-anchor","middle")
-		.style("font-size",fs)
-
-	plot.append("path").datum([{x:T[0],y:1},{x:T[1],y:1}]).attr("d",line)
-		.style("stroke","grey").style("stroke-width","1px")
+	plot.append("path").datum([{x:T[0],y:1},{x:T[1],y:1}]).attr("d",line).attr("class",styles.threshold)
 	
 	plot.append("path").datum([{x:0,y:S},{x:10,y:S}]).attr("d",line)
-		.style("stroke","darkblue").style("stroke-width","1px")
-		.style("stroke-dasharray","4 4").attr("class","chargelevel")
+		.attr("class",styles.chargelevel)
 		.attr("id","max_charge")
 	
 	plot.append("path").datum(curve.spiketrain).attr("d",line)
-		.style("stroke","blue").style("stroke-width","1px")
-		.style("fill","none")
-		.attr("id","spiketrain")
+		.attr("class",styles.spiketrain)
 	
-	plot.selectAll(".spike").data(curve.spikes).enter().append("line")
-		.attr("id","spike")
+	plot.selectAll("."+styles.spike).data(curve.spikes).enter().append("line")
+		.attr("class",styles.spike)
 		.attr("x1",function(d){return sc_x(d)})
 		.attr("x2",function(d){return sc_x(d)})
 		.attr("y1",function(d){return sc_y(1)})
 		.attr("y2",function(d){return sc_y(1+delta)})
-		.style("stroke-width","3px")
-		.style("stroke","red")
+		
 	
 }
 
@@ -88,21 +76,19 @@ const update = (controls) => {
 	const delta = param.spike_intensity.widget.value()
 	const curve = spiketrain(S,T[1])
 	
-	controls.select(".plot").select("#max_charge").datum([{x:0,y:S},{x:10,y:S}]).attr("d",line)
-	controls.select(".plot").select("#spiketrain").datum(curve.spiketrain).attr("d",line)
-	const nuck = controls.select(".plot").selectAll("#spike").data(curve.spikes)
+	controls.select("."+styles.plot).select("#max_charge").datum([{x:0,y:S},{x:10,y:S}]).attr("d",line)
+	controls.select("."+styles.plot).select("."+styles.spiketrain).datum(curve.spiketrain).attr("d",line)
+	const nuck = controls.select("."+styles.plot).selectAll("."+styles.spike).data(curve.spikes)
 		.attr("x1",function(d){return sc_x(d)})
 		.attr("x2",function(d){return sc_x(d)})
 		.attr("y1",function(d){return sc_y(1)})
 		.attr("y2",function(d){return sc_y(1+delta)})
 	
-	nuck.enter().append("line").attr("id","spike")
+	nuck.enter().append("line").attr("class",styles.spike)
 	.attr("x1",function(d){return sc_x(d)})
 	.attr("x2",function(d){return sc_x(d)})
 	.attr("y1",function(d){return sc_y(1)})
 	.attr("y2",function(d){return sc_y(1+delta)})
-	.style("stroke-width","3px")
-	.style("stroke","red")
 	
 	nuck.exit().remove()
 	

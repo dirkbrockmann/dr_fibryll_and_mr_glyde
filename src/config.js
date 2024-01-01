@@ -32,9 +32,6 @@ export default {
 		anchor:{x:6,y:3},
 		width:200,
 		height:80,
-		fontsize:12,
-		spike_color:"red",
-		line_color:"blue",
 		x_label:"time",
 		y_label:"charge"
 	}
