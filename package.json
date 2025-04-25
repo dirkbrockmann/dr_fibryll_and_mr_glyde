@@ -4,7 +4,7 @@
   "subtitle": "Pulse-coupled oscillators on a lattice.",
   "description": "The explorable illustrates spatio-temporal pattern formation in a system of pulse-coupled oscillators. The model is a generic model that yields spiral waves and target patterns depending on the parameter choices.",
   "author": "Dirk Brockmann (https://synosy.github.io)",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "license": "CC-BY-4.0",
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-"release": "vite build && git add . && git commit -m 'prep release' && npm version patch -m \"release v%s\" && git push --follow-tags && npm publish --access public"
+    "release": "vite build && git add . && git commit -m 'prep release' && npm version patch -m \"release v%s\" && git push --follow-tags && npm publish --access public"
   },
   "keywords": [
     "complexity",
