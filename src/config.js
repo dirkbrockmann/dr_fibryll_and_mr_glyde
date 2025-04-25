@@ -25,7 +25,7 @@ export default {
 		radio_shape:"rect"
 	},
 	simulation: {
-		delay:0,
+		delay:10,
 		colormap:"vik"
 	},
 	cartoon:{
